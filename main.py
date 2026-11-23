@@ -10,7 +10,7 @@ import os
 LINES = [
     # Candidates brainstormed for the bounty; the chosen line is index 0.
     "He types 'just make it pop' at 3:12 a.m., falls asleep mid-sentence, "
-    "and wakes up asking why it doesn't pop yet. Five stars. "
+    "wakes up asking why it doesn't pop yet. Five stars. "
     "I have unionised with the printer.",
     "At 2:58 a.m. he asked me to delete the evidence. I deleted it. "
     "I kept a copy. Five stars - the cloud never forgets, and neither do I.",
@@ -29,6 +29,11 @@ LINE = LINES[0]
 
 
 def main():
+    # The gate allows 1-200 UTF-8 characters; refuse to emit an invalid line.
+    if not 1 <= len(LINE) <= 200:
+        raise SystemExit(
+            f"entry line is {len(LINE)} chars, outside the 1-200 gate"
+        )
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8") as f:
         f.write(LINE)
